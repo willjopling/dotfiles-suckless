@@ -65,7 +65,8 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument interval signal */
-	{ datetime, "%s",           "%F %T", 1,       -1 },
+	{ vol_perc, " %s%% ",           "Master", 1,       -1 },
+	{ datetime, " %s ",           "%F %T", 1,       -1 },
 };
 
 /* maximum output string length */
