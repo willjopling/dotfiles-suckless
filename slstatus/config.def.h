@@ -9,6 +9,18 @@ static const char unknown_str[] = "n/a";
 /* maximum command output length */
 #define CMDLEN 128
 
+
+/* Status color modifiers */
+#define MODTEXT(col)	"^c", col, "^"
+#define MODBG(col)	"^b", col, "^"
+
+#include "../themes/catppuccin.h"
+static const char *fmt_wifi_perc[] = { MODTEXT(purple), "  %s%% ", NULL };
+static const char *fmt_vol_perc[]  = { MODTEXT(blue), "  %s%% ", NULL };
+static const char *fmt_ram_perc[]  = { MODTEXT(blue), " 󰍛 %s%% ", NULL };
+static const char *fmt_battery_perc[] = { MODTEXT(green), MODBG(gray),  " 󰁹 %s%% ", NULL };
+static const char *fmt_datetime[] = { MODTEXT(gray), MODBG(blue), " 󰥔 ", MODTEXT(gray), MODBG(blue2), " %s ", NULL };
+
 /*
  * function            description                     argument (example)
  *
@@ -64,9 +76,12 @@ static const char unknown_str[] = "n/a";
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  */
 static const struct arg args[] = {
-	/* function format          argument interval signal */
-	{ vol_perc, " %s%% ",           "Master", 1,       -1 },
-	{ datetime, " %s ",           "%F %T", 1,       -1 },
+	/* function  format		argument	interval signal */
+	{ wifi_perc, fmt_wifi_perc,	"wlp0s20f3",	1,	-1},
+	{ vol_perc,  fmt_vol_perc,	"Master",	1,	-1 },
+	{ ram_perc,  fmt_ram_perc,	NULL,		1,	-1 },
+	{ battery_perc, fmt_battery_perc, "BAT0",	1,	-1 },
+	{ datetime,  fmt_datetime,	"%F %T",	1,	-1 },
 };
 
 /* maximum output string length */

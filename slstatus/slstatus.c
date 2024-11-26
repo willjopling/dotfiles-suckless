@@ -13,7 +13,7 @@
 
 struct arg {
 	const char *(*func)(const char *);
-	const char *fmt;
+	const char **fmt;
 	const char *args;
 	unsigned int interval;
 	int signal;
@@ -43,12 +43,22 @@ usage(void)
 	die("usage: %s [-v] [-s] [-1]", argv0);
 }
 
+static char
+*catformat(const char **fmt, char *buf) {
+
+	for(int i = 0; fmt[i] != NULL; i++)
+		strcat(buf, fmt[i]);
+
+	return buf;
+}
+
 static void
 printstatus(int it, int upsig)
 {
 	size_t i;
 	int update = 0;
 	char status[MAXLEN];
+	char format[1024];
 	const char *res;
 
 	for (i = 0; i < LEN(args); i++) {
@@ -61,8 +71,10 @@ printstatus(int it, int upsig)
 		if (!(res = args[i].func(args[i].args)))
 			res = unknown_str;
 
-		if (esnprintf(statuses[i], sizeof(statuses[i]), args[i].fmt, res) < 0)
+		format[0] = '\0'; // Reset the buffer for the next format.
+		if (esnprintf(statuses[i], sizeof(statuses[i]), catformat(args[i].fmt, format), res) < 0) {
 			break;
+		}
 	}
 
 	if (!update)
