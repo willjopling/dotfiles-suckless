@@ -46,7 +46,7 @@ static Block blocks[] = {
         { hotspotu,             hotspotc,               -1,             4 },
         { calendaru,            calendarc,              1,              1 },
         { mailu,                mailc,                  180,            3 },
-        { volumeu,              volumec,                0,              2 },
+        { volumeu,              volumec,                1,              2 },
         { cputempu,             cputempc,               2,              6 },
         { ramu,                 ramc,                   2,              7 },
         { batteryu,             batteryc,               10,             5 },

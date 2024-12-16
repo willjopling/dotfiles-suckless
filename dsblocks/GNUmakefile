@@ -2,6 +2,7 @@ PREFIX = /usr/local
 
 CC = gcc
 CFLAGS = -O3 -Wall -Wextra
+CLFLAGS = -lasound
 
 X11CFLAGS = $(shell pkg-config --cflags x11)
 X11LIBS = $(shell pkg-config --libs x11)
@@ -20,7 +21,7 @@ blocks/%.o: blocks/%.c blocks/%.h util.h shared.h sigvals.h
 	${CC} -o $@ -c -Wno-unused-parameter ${CFLAGS} $<
 
 dsblocks: dsblocks.o util.o ${BLOCKS:c=o}
-	${CC} -o $@ $^ ${X11LIBS}
+	${CC} -o $@ $^ ${X11LIBS} ${CLFLAGS}
 
 sigdsblocks/sigdsblocks: sigdsblocks/sigdsblocks.c sigvals.h
 	${CC} -o $@ ${CFLAGS} $<
